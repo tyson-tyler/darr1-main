@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@import "tw-animate-css";
+
+body {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.contact-bg {
+  background-image: url("https://images.hdqwalls.com/download/model-looking-at-viewer-cozy-corners-fi-3840x2400.jpg");
+  background-size: cover;
+  background-position: center;
+}
