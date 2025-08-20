@@ -33,7 +33,7 @@ export default async function Page({ params }: PageProps) {
   if (!product) return notFound();
 
   return (
-    <main className="px-4 md:px-8 lg:px-12 xl:px-20 py-10 w-full overflow-x-hidden bg-gray-50">
+    <main className="px-4 md:px-8 lg:px-12 xl:px-20 py-10 w-full overflow-x-hidden bg-gray-100">
       <section className="flex flex-col lg:flex-row gap-10 lg:gap-16 max-w-[120rem] mx-auto">
         {/* Left - Product Images */}
         <div className="flex-1">
