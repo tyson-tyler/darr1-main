@@ -53,7 +53,7 @@ const Sidebar = () => {
     { id: 4, name: "Orders", link: "/admin/orders", icon: <FaShoppingCart /> },
     { id: 5, name: "Customers", link: "/admin/customers", icon: <FaUsers /> },
     // { id: 6, name: "Reviews", link: "/admin/reviews", icon: <FaStar /> },
-    // { id: 7, name: "Discounts", link: "/admin/discounts", icon: <FaTags /> },
+    { id: 7, name: "Discounts", link: "/admin/discounts", icon: <FaTags /> },
     {
       id: 8,
       name: "Collections",
