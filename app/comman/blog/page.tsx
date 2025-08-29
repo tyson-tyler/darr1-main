@@ -16,19 +16,19 @@ const blogs: Blog[] = [
     id: 1,
     title: "T-Shirt Styling Tips for Boys & Girls",
     desc: "T-shirts are the most versatile clothing piece in every wardrobe. Boys can style plain tees with denim jackets, cargo pants, or sneakers for a casual look, while girls can pair oversized tees with skirts, biker shorts, or layer with blazers. Accessorizing with caps, chains, or belts instantly upgrades your outfit.",
-    img: "https://source.unsplash.com/600x400/?tshirt,fashion",
+    img: "https://wallpaperaccess.com/full/6702489.png",
   },
   {
     id: 2,
     title: "Why T-Shirts Never Go Out of Style",
     desc: "T-shirts have remained timeless because of their comfort, simplicity, and adaptability. From casual wear to layering with jackets or even semi-formal outfits, t-shirts fit every mood and occasion. They are affordable, expressive, and suitable for all genders, making them a true fashion essential.",
-    img: "https://source.unsplash.com/600x400/?tshirt,style",
+    img: "https://tse1.explicit.bing.net/th/id/OIP.JrWycbbogYKbN3KacsyqcQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
   },
   {
     id: 3,
     title: "Gen Z Fashion: T-Shirt Edition",
     desc: "Gen Z is redefining t-shirt fashion by embracing oversized fits, bold graphics, sustainable fabrics, and streetwear-inspired designs. Trendy crop tops, tie-dye patterns, and minimalistic logos are ruling social media. For Gen Z, t-shirts are not just clothes—they’re a way of expressing identity and culture.",
-    img: "https://source.unsplash.com/600x400/?genz,clothing",
+    img: "https://wallpaperaccess.com/full/4080746.jpg",
   },
 ];
 
