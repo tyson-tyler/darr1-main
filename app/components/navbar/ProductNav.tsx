@@ -118,17 +118,15 @@ const Productnav = () => {
               >
                 Shop
               </Link>
-              <Link href={"/review"} className="cursor-pointer">
-                Review
-              </Link>
+              
 
-              <Link href="/blog" className="cursor-pointer">
+              <Link href="/common/blog" className="cursor-pointer">
                 Blog
               </Link>
-              <Link href="/about" className="cursor-pointer">
+              <Link href="/comman/about" className="cursor-pointer">
                 About
               </Link>
-              <Link href="/contact" className="cursor-pointer">
+              <Link href="/comman/contact" className="cursor-pointer">
                 Contact
               </Link>
             </div>
