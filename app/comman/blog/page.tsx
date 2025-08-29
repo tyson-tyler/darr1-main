@@ -37,7 +37,7 @@ export default function BlogSection() {
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className=" bg-gray-50 py-12 px-6">
       <h2 className="text-3xl font-bold text-center mb-10">Our Blog</h2>
 
       {/* Blog Grid */}
