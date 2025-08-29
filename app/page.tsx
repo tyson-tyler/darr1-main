@@ -21,7 +21,7 @@ import HeroTitle2 from "./components/navbar/heading2";
 import ContactForm from "./comman/contact/page";
 import MainHeader from "./admin/components/MainHeader";
 import Mainnav from "./components/navbar/mainnav";
-import BlogSection from "@/comman/blog"
+import BlogSection from "./comman/blog"
 
 export default async function Home() {
   const [featuredProducts, collections, categories, products] =
