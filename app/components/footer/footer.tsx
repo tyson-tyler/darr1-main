@@ -32,7 +32,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/common/teams" className="hover:underline me-4 md:me-6">
+              <Link href="/comman/teams" className="hover:underline me-4 md:me-6">
                 License
               </Link>
             </li>
