@@ -33,7 +33,7 @@ const Footer = () => {
             </li>
             <li>
               <Link href="/common/teams" className="hover:underline me-4 md:me-6">
-                Teams
+                License
               </Link>
             </li>
             <li>
