@@ -242,7 +242,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             </h2>
             <div className="flex flex-col gap-2">
               {[
-                { label: "Prepaid", value: "prepaid" },
+            
                 { label: "Cash On Delivery", value: "cod" },
               ].map((mode) => (
                 <button
