@@ -21,6 +21,7 @@ import HeroTitle2 from "./components/navbar/heading2";
 import ContactForm from "./comman/contact/page";
 import MainHeader from "./admin/components/MainHeader";
 import Mainnav from "./components/navbar/mainnav";
+import BlogSection from "@/comman/blog"
 
 export default async function Home() {
   const [featuredProducts, collections, categories, products] =
@@ -58,6 +59,10 @@ export default async function Home() {
         <HeroTitle2 />
         <ProductsGridView products={products} />
       </div>
+      <div className=" w-full mb-8">
+        <BlogSection/>
+      </div>
+      
 
       <div className="bg-white w-full ">
         <CustomerReviews />
