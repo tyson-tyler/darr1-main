@@ -120,7 +120,7 @@ const Productnav = () => {
               </Link>
               
 
-              <Link href="/common/blog" className="cursor-pointer">
+              <Link href="/comman/blog" className="cursor-pointer">
                 Blog
               </Link>
               <Link href="/comman/about" className="cursor-pointer">
