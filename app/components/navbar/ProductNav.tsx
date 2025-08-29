@@ -4,15 +4,12 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { BiSearch, BiMenu, BiX } from "react-icons/bi";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBagShopping } from "react-icons/fa6";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import { AuthContextProvider, useAuth } from "@/context/authcontext";
-
 import Link from "next/link";
-import { FaHeart, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import HeaderClientButtons from "../HeaderClientButtons";
-import { useUser } from "@/lib/firebase/user/read";
 
 const Productnav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,6 +21,7 @@ const Productnav = () => {
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <div
@@ -51,7 +49,6 @@ const Productnav = () => {
             >
               Shop
             </Link>
-
             <Link href="/comman/about" className="cursor-pointer">
               About
             </Link>
@@ -109,24 +106,35 @@ const Productnav = () => {
             className="lg:hidden bg-black text-white px-4 pb-4"
           >
             <div className="flex flex-col gap-4 font-semibold pt-4">
-              <Link href="/" className="cursor-pointer">
+              <Link href="/" onClick={closeMenu} className="cursor-pointer">
                 Home
               </Link>
               <Link
                 href="/categories/1aIpbpPn4qWIDAm59MWk"
+                onClick={closeMenu}
                 className="cursor-pointer"
               >
                 Shop
               </Link>
-              
-
-              <Link href="/comman/blog" className="cursor-pointer">
+              <Link
+                href="/comman/blog"
+                onClick={closeMenu}
+                className="cursor-pointer"
+              >
                 Blog
               </Link>
-              <Link href="/comman/about" className="cursor-pointer">
+              <Link
+                href="/comman/about"
+                onClick={closeMenu}
+                className="cursor-pointer"
+              >
                 About
               </Link>
-              <Link href="/comman/contact" className="cursor-pointer">
+              <Link
+                href="/comman/contact"
+                onClick={closeMenu}
+                className="cursor-pointer"
+              >
                 Contact
               </Link>
             </div>
