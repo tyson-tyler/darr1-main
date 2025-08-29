@@ -6,6 +6,7 @@ import emailjs from "@emailjs/browser";
 import Link from "next/link";
 import Footer from "@/app/components/footer/footer";
 import { FaWhatsapp } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function ContactForm() {
   const form = useRef<HTMLFormElement | null>(null);
@@ -34,36 +35,89 @@ export default function ContactForm() {
       });
   };
 
+  // Framer Motion Variants
+  const containerVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const itemVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
+    }),
+  };
+
   return (
     <>
       <div className="flex items-center justify-center min-h-screen px-4 contact-bg relative">
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="relative bg-slate-900/90 backdrop-blur-md p-6 md:p-10 rounded-2xl shadow-lg max-w-3xl w-full text-white">
+        {/* Motion container */}
+        <motion.div
+          className="relative bg-slate-900/90 backdrop-blur-md p-6 md:p-10 rounded-2xl shadow-2xl max-w-3xl w-full text-white"
+          variants={containerVariant}
+          initial="hidden"
+          animate="visible"
+        >
           {/* WhatsApp Button */}
-          <div className="flex justify-center mb-6">
+          <motion.div
+            className="flex justify-center mb-6"
+            whileHover={{ scale: 1.1, rotate: 2 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <a
               href="https://wa.me/919876543210" // replace with your WhatsApp number
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gradient-to-r from-green-400 to-green-600 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+              className="flex items-center gap-2 bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-full shadow-lg"
             >
               <FaWhatsapp className="text-2xl" />
               <span className="font-semibold">Chat on WhatsApp</span>
             </a>
-          </div>
+          </motion.div>
 
           {/* Form */}
-          <form ref={form} onSubmit={sendEmail} className="text-white">
-            <h2 className="text-3xl font-bold mb-2 text-center">Contact Us</h2>
-            <p className="text-center mb-6 text-gray-300 text-sm">
+          <motion.form
+            ref={form}
+            onSubmit={sendEmail}
+            className="text-white space-y-4"
+          >
+            <motion.h2
+              className="text-3xl font-bold mb-2 text-center"
+              variants={itemVariant}
+              custom={0}
+              initial="hidden"
+              animate="visible"
+            >
+              Contact Us
+            </motion.h2>
+            <motion.p
+              className="text-center mb-6 text-gray-300 text-sm"
+              variants={itemVariant}
+              custom={1}
+              initial="hidden"
+              animate="visible"
+            >
               We use an agile approach to test assumptions and connect with the
               needs of your audience early and often.
-            </p>
+            </motion.p>
 
             {/* Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              variants={itemVariant}
+              custom={2}
+              initial="hidden"
+              animate="visible"
+            >
               <input
                 type="text"
                 name="first_name"
@@ -78,10 +132,16 @@ export default function ContactForm() {
                 required
                 className="p-3 rounded-lg bg-slate-800 border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
+            </motion.div>
 
             {/* Email + Phone */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              variants={itemVariant}
+              custom={3}
+              initial="hidden"
+              animate="visible"
+            >
               <input
                 type="email"
                 name="user_email"
@@ -95,18 +155,28 @@ export default function ContactForm() {
                 placeholder="Phone Number"
                 className="p-3 rounded-lg bg-slate-800 border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
+            </motion.div>
 
             {/* Message */}
-            <textarea
+            <motion.textarea
               name="message"
               rows={4}
               placeholder="Leave a comment..."
-              className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-            ></textarea>
+              className="w-full p-3 rounded-lg bg-slate-800 border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              variants={itemVariant}
+              custom={4}
+              initial="hidden"
+              animate="visible"
+            ></motion.textarea>
 
             {/* Terms */}
-            <p className="text-xs text-gray-400 mb-4">
+            <motion.p
+              className="text-xs text-gray-400"
+              variants={itemVariant}
+              custom={5}
+              initial="hidden"
+              animate="visible"
+            >
               By submitting this form you agree to our{" "}
               <Link href="#" className="underline text-blue-400">
                 terms and conditions
@@ -116,24 +186,34 @@ export default function ContactForm() {
                 privacy policy
               </Link>
               .
-            </p>
+            </motion.p>
 
             {/* Submit */}
-            <button
+            <motion.button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 transition-colors text-white px-6 py-3 rounded-lg w-full text-sm font-medium"
               disabled={loading}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              variants={itemVariant}
+              custom={6}
+              initial="hidden"
+              animate="visible"
             >
               {loading ? "Sending..." : "Send Message"}
-            </button>
+            </motion.button>
 
             {success && (
-              <p className="text-green-400 text-center mt-4 text-sm">
+              <motion.p
+                className="text-green-400 text-center mt-4 text-sm"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
                 ✅ Message sent successfully!
-              </p>
+              </motion.p>
             )}
-          </form>
-        </div>
+          </motion.form>
+        </motion.div>
       </div>
       <Footer />
     </>
