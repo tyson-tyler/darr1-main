@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Blog = {
@@ -32,32 +31,45 @@ const blogs: Blog[] = [
   },
 ];
 
-
 export default function BlogSection() {
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
 
   return (
-    <div className=" bg-gray-50 py-12 px-6">
-      <h2 className="text-3xl font-bold text-center mb-10">Our Blog</h2>
+    <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 px-6">
+      <motion.h2
+        className="text-4xl font-extrabold text-center mb-14 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Our Blog
+      </motion.h2>
 
       {/* Blog Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {blogs.map((blog) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        {blogs.map((blog, index) => (
           <motion.div
             key={blog.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition"
-            whileHover={{ scale: 1.03 }}
+            className="relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer group"
+            whileHover={{ y: -8, scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
             onClick={() => setSelectedBlog(blog)}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
           >
-            <img
+            <motion.img
               src={blog.img}
               alt={blog.title}
-              width={600}
-              height={400}
-              className="w-full h-48 object-cover"
+              className="w-full h-52 object-cover group-hover:scale-110 transition duration-500"
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex items-end p-4">
+              <h3 className="text-lg font-semibold text-white">{blog.title}</h3>
+            </div>
+            <div className="p-5">
+              <h3 className="text-xl font-semibold mb-2 text-gray-800">
+                {blog.title}
+              </h3>
               <p className="text-gray-600 text-sm line-clamp-3">{blog.desc}</p>
             </div>
           </motion.div>
@@ -68,36 +80,44 @@ export default function BlogSection() {
       <AnimatePresence>
         {selectedBlog && (
           <motion.div
-            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedBlog(null)}
           >
             <motion.div
-              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full p-6 relative"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
+              className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full p-8 relative"
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ type: "spring", damping: 20, stiffness: 200 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <img
+              <motion.img
                 src={selectedBlog.img}
                 alt={selectedBlog.title}
-                width={800}
-                height={500}
-                className="w-full h-64 object-cover rounded-xl mb-4"
+                className="w-full h-72 object-cover rounded-2xl mb-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
               />
-              <h3 className="text-2xl font-bold mb-3">{selectedBlog.title}</h3>
-              <p className="text-gray-700 text-base">{selectedBlog.desc}</p>
+              <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                {selectedBlog.title}
+              </h3>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {selectedBlog.desc}
+              </p>
 
-              {/* Close button */}
-              <button
+              {/* Close Button */}
+              <motion.button
                 onClick={() => setSelectedBlog(null)}
-                className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm hover:bg-red-600"
+                className="absolute top-4 right-4 bg-red-500 text-white w-9 h-9 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition"
+                whileHover={{ rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
               >
                 ✕
-              </button>
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
