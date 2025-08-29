@@ -49,7 +49,7 @@ export default function BlogSection() {
             whileHover={{ scale: 1.03 }}
             onClick={() => setSelectedBlog(blog)}
           >
-            <Image
+            <img
               src={blog.img}
               alt={blog.title}
               width={600}
@@ -81,7 +81,7 @@ export default function BlogSection() {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
             >
-              <Image
+              <img
                 src={selectedBlog.img}
                 alt={selectedBlog.title}
                 width={800}
