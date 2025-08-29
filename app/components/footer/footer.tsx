@@ -21,7 +21,7 @@ const Footer = () => {
               className="h-8 w-8"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              TheDrott
+              The Drott
             </span>
           </Link>
 
@@ -32,13 +32,13 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:underline me-4 md:me-6">
-                Product
+              <Link href="/common/teams" className="hover:underline me-4 md:me-6">
+                Teams
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:underline me-4 md:me-6">
-                
+              <Link href="/common/terms" className="hover:underline me-4 md:me-6">
+                Terms & Policy
               </Link>
             </li>
             <li>
