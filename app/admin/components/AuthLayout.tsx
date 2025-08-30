@@ -12,22 +12,22 @@ const AdminLayout = ({ children }: any) => {
   const { user } = useAuth();
 
   const { data: admin, error, isLoading } = useAdmin({ email: user?.email });
-  // if (!admin) {
-  //   return (
-  //     <div className="h-screen w-screen flex flex-col gap-2 justify-center items-center">
-  //       <h1 className="font-bold">You are not admin!</h1>
-  //       <h1 className="text-gray-600 text-sm">{user?.email}</h1>
-  //       <button
-  //         className="px-3 text-xs py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
-  //         onClick={async () => {
-  //           await signOut(auth);
-  //         }}
-  //       >
-  //         Logout
-  //       </button>
-  //     </div>
-  //   );
-  // }
+  if (!admin) {
+    return (
+      <div className="h-screen w-screen flex flex-col gap-2 justify-center items-center">
+        <h1 className="font-bold">You are not admin!</h1>
+        <h1 className="text-gray-600 text-sm">{user?.email}</h1>
+        <button
+          className="px-3 text-xs py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
+          onClick={async () => {
+            await signOut(auth);
+          }}
+        >
+          Logout
+        </button>
+      </div>
+    );
+  }
   if (isLoading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
