@@ -23,29 +23,29 @@ const Layout = ({ children }: LayoutProps) => {
 export default Layout;
 
 function AdminChecking({ children }: LayoutProps) {
-  // const { user, isLoading } = useAuth();
-  // const router = useRouter();
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!user && !isLoading) {
-  //     router.push("/auth/login");
-  //   }
-  // }, [user, isLoading, router]);
+  useEffect(() => {
+    if (!user && !isLoading) {
+      router.push("/auth/login");
+    }
+  }, [user, isLoading, router]);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="h-screen w-full flex justify-center items-center">
-  //       <FaCircleUp className="w-12 h-12 animate-spin" />
-  //     </div>
-  //   );
-  // }
-  // if (!user) {
-  //   return (
-  //     <div className="w-full h-screen flex justify-center items-center">
-  //       Please Login First
-  //     </div>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <FaCircleUp className="w-12 h-12 animate-spin" />
+      </div>
+    );
+  }
+  if (!user) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        Please Login First
+      </div>
+    );
+  }
 
   return <AdminLayout>{children}</AdminLayout>;
 }
