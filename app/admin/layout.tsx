@@ -14,7 +14,8 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <AuthContextProvider>
- {children}  
+      
+     <AdminChecking>{children} </AdminChecking>   
     
    </AuthContextProvider>
   );
@@ -22,8 +23,8 @@ const Layout = ({ children }: LayoutProps) => {
 export default Layout;
 
 function AdminChecking({ children }: LayoutProps) {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
+  // const { user, isLoading } = useAuth();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   if (!user && !isLoading) {
