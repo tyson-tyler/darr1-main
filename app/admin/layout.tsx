@@ -13,10 +13,10 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    // <AuthContextProvider>
+    <AuthContextProvider>
      {children}
     
-   //</AuthContextProvider>
+   </AuthContextProvider>
   );
 };
 export default Layout;
