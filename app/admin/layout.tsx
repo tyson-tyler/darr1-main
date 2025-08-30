@@ -14,9 +14,9 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     // <AuthContextProvider>
-      // <AdminChecking>{children}</AdminChecking>
-    <div>{children}</div>
-    // </AuthContextProvider>
+      <AdminChecking>{children}</AdminChecking>
+    
+{/*     </AuthContextProvider> */}
   );
 };
 export default Layout;
