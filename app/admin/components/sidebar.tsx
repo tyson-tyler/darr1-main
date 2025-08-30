@@ -44,16 +44,16 @@ const Sidebar = () => {
   const menuList = [
     { id: 1, name: "Home", link: "/admin", icon: <FaHome /> },
     { id: 2, name: "Product", link: "/admin/product", icon: <FaBoxOpen /> },
-    // {
-    //   id: 3,
-    //   name: "Categories",
-    //   link: "/admin/catergories",
-    //   icon: <FaThList />,
-    // },
+    {
+      id: 3,
+      name: "Categories",
+      link: "/admin/catergories",
+      icon: <FaThList />,
+    },
     { id: 4, name: "Orders", link: "/admin/orders", icon: <FaShoppingCart /> },
     { id: 5, name: "Customers", link: "/admin/customers", icon: <FaUsers /> },
     // { id: 6, name: "Reviews", link: "/admin/reviews", icon: <FaStar /> },
-    { id: 7, name: "Discounts", link: "/admin/discounts", icon: <FaTags /> },
+ 
     {
       id: 8,
       name: "Collections",
