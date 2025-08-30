@@ -13,7 +13,7 @@ const MainHeader = () => {
     <div className="relative w-full h-screen overflow-hidden">
       {/* Video Background */}
       <video
-        src={"/1.mp4"}
+        src={"/2.mp4"}
         autoPlay
         muted={muted}
         loop
