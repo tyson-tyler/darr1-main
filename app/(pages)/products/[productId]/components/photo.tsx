@@ -4,11 +4,17 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import Image from "next/image";
+import { X } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function Photos({ imageList }: { imageList: string[] }) {
   const [selectedImage, setSelectedImage] = useState(imageList?.[0]);
   const [isZoomed, setIsZoomed] = useState(false);
   const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!imageList || imageList.length === 0) {
     return (
@@ -20,9 +26,31 @@ export default function Photos({ imageList }: { imageList: string[] }) {
 
   return (
     <div className="flex flex-col gap-6 w-full items-center">
-      {/* Main Image with Zoom - Desktop */}
+      {/* ✅ Grid for XL Screens (Soul Store style) */}
+      <div className="hidden xl:grid grid-cols-2 grid-rows-2 gap-4 w-full max-w-6xl">
+        {imageList.slice(0, 4).map((item, index) => (
+          <motion.div
+            key={index}
+            className="relative w-full aspect-square overflow-hidden rounded-2xl bg-white shadow-sm cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            onClick={() => {
+              setSelectedImage(item);
+              setIsModalOpen(true);
+            }}
+          >
+            <Image
+              src={item}
+              alt={`Product image ${index + 1}`}
+              fill
+              className="object-cover"
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ✅ Main Image with Zoom - Only for LG Screens */}
       <div
-        className="relative w-full aspect-square max-w-3xl rounded-3xl overflow-hidden bg-gradient-to-tr from-gray-50 to-white group hidden sm:block"
+        className="relative w-full aspect-square max-w-3xl rounded-3xl overflow-hidden bg-gradient-to-tr from-gray-50 to-white group hidden lg:block xl:hidden"
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={(e) => {
@@ -52,9 +80,7 @@ export default function Photos({ imageList }: { imageList: string[] }) {
               )}
               style={
                 isZoomed
-                  ? {
-                      transformOrigin: `${position.x}% ${position.y}%`,
-                    }
+                  ? { transformOrigin: `${position.x}% ${position.y}%` }
                   : {}
               }
               priority
@@ -63,60 +89,61 @@ export default function Photos({ imageList }: { imageList: string[] }) {
         </AnimatePresence>
       </div>
 
-      {/* Slider for Mobile */}
-      <div className="relative w-full aspect-square max-w-md rounded-2xl overflow-hidden sm:hidden">
-        <motion.div
-          className="flex h-full w-full"
-          drag="x"
-          dragConstraints={{ left: -((imageList.length - 1) * 300), right: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      {/* ✅ Slider for Mobile & Medium Screens */}
+      <div className="relative w-full max-w-3xl sm:block lg:hidden">
+        <Swiper
+          pagination={{ clickable: true }}
+          modules={[Pagination]}
+          className="rounded-2xl overflow-hidden"
         >
           {imageList.map((item, index) => (
-            <div
-              key={index}
-              className="relative flex-shrink-0 w-full h-full"
-              style={{ minWidth: "100%" }}
-            >
-              <Image
-                src={item}
-                alt={`Slider Image ${index + 1}`}
-                fill
-                className="object-cover w-full h-full"
-              />
-            </div>
+            <SwiperSlide key={index}>
+              <div className="relative aspect-square w-full">
+                <Image
+                  src={item}
+                  alt={`Slider Image ${index + 1}`}
+                  fill
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </SwiperSlide>
           ))}
-        </motion.div>
+        </Swiper>
       </div>
 
-      {/* Thumbnails - Only for Desktop */}
-      <div className="hidden sm:flex overflow-x-auto gap-4 py-3 px-2 w-full justify-center scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {imageList.map((item, index) => {
-          const isActive = item === selectedImage;
-          return (
-            <motion.button
-              key={index}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedImage(item)}
-              className={clsx(
-                "relative flex-shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300",
-                "w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28",
-                isActive
-                  ? "border-indigo-500 shadow-lg ring-2 ring-indigo-400/40"
-                  : "border-gray-200 hover:border-indigo-300 hover:shadow-md"
-              )}
+      {/* 🔥 Modal for XL Screens */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative max-w-5xl w-full aspect-video rounded-xl overflow-hidden shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
               <Image
-                src={item}
-                alt={`Thumbnail ${index + 1}`}
-                width={112}
-                height={112}
-                className="object-cover w-full h-full"
+                src={selectedImage}
+                alt="Modal product image"
+                fill
+                className="object-contain bg-black"
               />
-            </motion.button>
-          );
-        })}
-      </div>
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-3 right-3 bg-white/80 hover:bg-white text-black p-2 rounded-full shadow-md"
+              >
+                <X size={20} />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
