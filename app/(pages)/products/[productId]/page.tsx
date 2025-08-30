@@ -4,9 +4,9 @@ import Photos from "./components/photo";
 import { getProduct } from "@/lib/firebase/products/read_server";
 import Details from "./components/Details";
 import AddReview from "./components/AddReviews";
-import RelatedProducts from "./components/RelatedProduct";
-import { notFound } from "next/navigation";
 import Reviews from "./components/review";
+import { notFound } from "next/navigation";
+// import RelatedProducts from "./components/RelatedProduct";
 
 type PageProps = {
   params: {
@@ -59,28 +59,27 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <main className="px-4 md:px-8 lg:px-12 xl:px-20 py-10 w-full overflow-x-hidden bg-gray-100">
-      <section className="flex flex-col lg:flex-row gap-10 lg:gap-16 max-w-[120rem] mx-auto">
+    <main className="px-3 sm:px-6 lg:px-12 xl:px-20 py-8 w-full bg-gray-100">
+      <section className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-[120rem] mx-auto">
         {/* Left - Product Images */}
-        <div className="flex-1">
+        <div className="flex-1 w-full max-w-full lg:max-w-[50%]">
           <Photos imageList={imageList} />
         </div>
 
         {/* Right - Product Details */}
-        <div className="flex-1 lg:max-w-2xl">
+        <div className="flex-1 lg:max-w-2xl w-full">
           <Details product={product} />
         </div>
       </section>
 
       {/* Reviews + Related */}
-      <div className="flex justify-center py-16">
-        {/* Make sure AuthContextProvider is a client component */}
+      <div className="flex justify-center py-12 sm:py-16 px-2 sm:px-4">
         <AuthContextProvider>
           <div className="flex flex-col gap-8 max-w-[100rem] w-full">
             <AddReview productId={productId} />
             <Reviews productId={productId} />
-            {/* double check spelling: categoryId */}
-{/*             <RelatedProducts categoryId={product.categoryId ?? ""} /> */}
+            {/* Uncomment when ready */}
+            {/* <RelatedProducts categoryId={product.categoryId ?? ""} /> */}
           </div>
         </AuthContextProvider>
       </div>
