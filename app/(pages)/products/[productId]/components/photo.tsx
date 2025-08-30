@@ -20,9 +20,9 @@ export default function Photos({ imageList }: { imageList: string[] }) {
 
   return (
     <div className="flex flex-col gap-6 w-full items-center">
-      {/* Main Image with Zoom */}
+      {/* Main Image with Zoom - Desktop */}
       <div
-        className="relative w-full aspect-square max-w-3xl rounded-3xl overflow-hidden bg-gradient-to-tr from-gray-50 to-white group"
+        className="relative w-full aspect-square max-w-3xl rounded-3xl overflow-hidden bg-gradient-to-tr from-gray-50 to-white group hidden sm:block"
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={(e) => {
@@ -63,8 +63,33 @@ export default function Photos({ imageList }: { imageList: string[] }) {
         </AnimatePresence>
       </div>
 
-      {/* Thumbnails */}
-      <div className="flex overflow-x-auto gap-4 py-3 px-2 w-full justify-center scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      {/* Slider for Mobile */}
+      <div className="relative w-full aspect-square max-w-md rounded-2xl overflow-hidden sm:hidden">
+        <motion.div
+          className="flex h-full w-full"
+          drag="x"
+          dragConstraints={{ left: -((imageList.length - 1) * 300), right: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
+          {imageList.map((item, index) => (
+            <div
+              key={index}
+              className="relative flex-shrink-0 w-full h-full"
+              style={{ minWidth: "100%" }}
+            >
+              <Image
+                src={item}
+                alt={`Slider Image ${index + 1}`}
+                fill
+                className="object-cover w-full h-full"
+              />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Thumbnails - Only for Desktop */}
+      <div className="hidden sm:flex overflow-x-auto gap-4 py-3 px-2 w-full justify-center scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         {imageList.map((item, index) => {
           const isActive = item === selectedImage;
           return (
