@@ -1,50 +1,16 @@
-"use client";
+import { ReactNode } from "react";
 
-import { AuthContextProvider, useAuth } from "@/context/authcontext";
-import AdminLayout from "./components/AuthLayout";
-import { useRouter } from "next/navigation";
-import { useEffect, ReactNode } from "react";
-import { FaCircleUp } from "react-icons/fa6";
-
-// Annotate props type
-type LayoutProps = {
+interface AdminLayoutProps {
   children: ReactNode;
-};
+}
 
-const Layout = ({ children }: LayoutProps) => {
+const AdminLayout = ({ children }: AdminLayoutProps) => {
   return (
-    <AuthContextProvider>
-     {children}
-    
-   </AuthContextProvider>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Navbar or Sidebar can go here */}
+      <main className="flex-1">{children}</main>
+    </div>
   );
 };
-export default Layout;
 
-function AdminChecking({ children }: LayoutProps) {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user && !isLoading) {
-      router.push("/auth/login");
-    }
-  }, [user, isLoading, router]);
-
-  if (isLoading) {
-    return (
-      <div className="h-screen w-full flex justify-center items-center">
-        <FaCircleUp className="w-12 h-12 animate-spin" />
-      </div>
-    );
-  }
-  if (!user) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        Please Login First
-      </div>
-    );
-  }
-
-  return <AdminLayout>{children}</AdminLayout>;
-}
+export default AdminLayout;
