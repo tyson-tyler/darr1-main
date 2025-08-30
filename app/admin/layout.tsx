@@ -14,7 +14,7 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <AuthContextProvider>
- <AdminChecking>{children}</AdminChecking>    
+ {children}  
     
    </AuthContextProvider>
   );
