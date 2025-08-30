@@ -34,26 +34,26 @@ export default async function Home() {
 
   return (
     <>
-      <Loader />
+    
       <Mainnav />
       <MainHeader />
 
       <div className="flex flex-col w-full justify-center items-center text-black bg-white">
-        {/* <HeroTitle /> */}
-        {/* <Categories categories={categories} /> */}
+{/*         <HeroTitle /> 
+         <Categories categories={categories} />  */}
       </div>
-      <div className="bg-white w-full ">
+{/*       <div className="bg-white w-full ">
         <HeroTitle1 />
         <Collections collections={collections} />
-      </div>
+      </div> */}
 
       {/* <div className="z-50 bg-black h-screen w-full">
         <Minimal />
       </div> */}
 
-      <div className="px-5">
+{/*       <div className="px-5">
         <WeddingBanner />
-      </div>
+      </div> */}
 
       <div className=" w-full mb-8">
         <HeroTitle2 />
