@@ -42,10 +42,10 @@ export default async function Home() {
 {/*         <HeroTitle /> 
          <Categories categories={categories} />  */}
       </div>
-{/*       <div className="bg-white w-full ">
+      <div className="bg-white w-full ">
         <HeroTitle1 />
         <Collections collections={collections} />
-      </div> */}
+      </div>
 
       {/* <div className="z-50 bg-black h-screen w-full">
         <Minimal />
