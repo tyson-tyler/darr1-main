@@ -10,14 +10,12 @@ const AboutPage = () => {
         {/* Hero Section */}
         <section className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] flex items-center justify-center bg-gray-900">
           <Image
-            src="/3.jpg" // replace with your image
+            src="https://res.cloudinary.com/dblf5n0yn/image/upload/v1756630975/poiz2vba5bxwuhj9qxnp.jpg" // replace with your image
             alt="About Hero"
             fill
             className="object-cover opacity-60"
           />
-          <h1 className="relative text-white text-4xl md:text-6xl font-bold z-10">
-            About
-          </h1>
+          
         </section>
 
         {/* Our Story Section */}
