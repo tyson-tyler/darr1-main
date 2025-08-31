@@ -36,14 +36,15 @@ export default function BlogSection() {
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 px-6">
-      <motion.h2
-        className="text-4xl font-extrabold text-center mb-14 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        Our Blog
-      </motion.h2>
+     <motion.h2
+  className="text-4xl font-extrabold text-center mb-14 text-black"
+  initial={{ opacity: 0, y: -30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+>
+  Our Blog
+</motion.h2>
+
 
       {/* Blog Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
