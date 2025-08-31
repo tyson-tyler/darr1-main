@@ -109,7 +109,7 @@ export default function Page() {
               <td>{address?.state}</td>
             </tr>
             <tr>
-              <td>Notes</td>
+              <td>Tshirt Size</td>
               <td>{address?.note}</td>
             </tr>
           </tbody>
