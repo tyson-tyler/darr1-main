@@ -44,7 +44,7 @@ const Productnav = () => {
               Home
             </Link>
             <Link
-              href="/categories/1aIpbpPn4qWIDAm59MWk"
+              href="/collections/bHAeVvxRVIIrznyGZPRp"
               className="cursor-pointer"
             >
               Shop
@@ -110,7 +110,7 @@ const Productnav = () => {
                 Home
               </Link>
               <Link
-                href="/categories/1aIpbpPn4qWIDAm59MWk"
+                href="/collections/bHAeVvxRVIIrznyGZPRp"
                 onClick={closeMenu}
                 className="cursor-pointer"
               >
