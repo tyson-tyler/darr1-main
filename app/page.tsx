@@ -50,7 +50,7 @@ export default async function Home() {
       </div>
       <main className="px-4 md:px-8 py-8">
         <CTAImage
-          href="/categories/1aIpbpPn4qWIDAm59MWk"
+          href="/collections/bHAeVvxRVIIrznyGZPRp"
           src="https://res.cloudinary.com/dblf5n0yn/image/upload/v1756630975/poiz2vba5bxwuhj9qxnp.jpg"
           alt="Shop the Summer Sale"
           priority
