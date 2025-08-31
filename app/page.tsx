@@ -33,7 +33,7 @@ export default async function Home() {
 
   return (
     <>
-      <Loader />
+      
       <Mainnav />
       <MainHeader />
       <div className="flex flex-col w-full justify-center items-center text-black bg-white">
