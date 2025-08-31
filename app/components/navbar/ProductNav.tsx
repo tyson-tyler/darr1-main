@@ -35,19 +35,15 @@ const Productnav = () => {
           <Link href={"/"} className="flex justify-center items-center gap-2">
             <Image src="/lightlogo.png" alt="logo" width={40} height={40} />
              <span
-            className={classNames(
-              "text-xl md:flex items-center gap-1 font-semibold tracking-wide hidden",
-              {
-                "text-black": scrolled,
-                "text-white": !scrolled,
-              }
-            )}
+            className={
+              "text-xl md:flex items-center gap-1 font-semibold tracking-wide hidden"
+           
           >
             The{" "}
             <p
               className={classNames(
                 "tracking-tight leading-tight font-serif italic",
-                { "text-black": scrolled, "text-white": !scrolled }
+               
               )}
             >
               Drott
