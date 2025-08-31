@@ -110,19 +110,13 @@ const Productnav = () => {
                 Home
               </Link>
               <Link
-                href="/categories/1aIpbpPn4qWIDAm59MWk"
+                href="/collections/JeaJzkxAmL4SsZ6M073u"
                 onClick={closeMenu}
                 className="cursor-pointer"
               >
                 Shop
               </Link>
-              <Link
-                href="/comman/blog"
-                onClick={closeMenu}
-                className="cursor-pointer"
-              >
-                Blog
-              </Link>
+             
               <Link
                 href="/comman/about"
                 onClick={closeMenu}
