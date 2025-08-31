@@ -58,46 +58,7 @@ const AboutPage = () => {
         </section>
       </div>
 
-      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
-        {/* Image */}
-        <div className="relative w-full h-[350px] md:h-[450px]">
-          <Image
-            src="/2.webp" // replace with your image
-            alt="Our Mission"
-            fill
-            className="object-cover rounded-xl shadow-lg"
-          />
-        </div>
-
-        {/* Text */}
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">Our Mission</h2>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus
-            dignissim risus, sed consectetur erat. Pellentesque habitant morbi
-            tristique senectus et netus et malesuada fames ac turpis egestas.
-            Nullam maximus mauris sit amet odio convallis, in pharetra magna
-            gravida.
-          </p>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra
-            odio. Pellentesque ac velit egestas, luctus arcu non, laoreet
-            mauris. Pellentesque tempor urna vitae mi vestibulum, nec venenatis
-            nulla lobortis.
-          </p>
-
-          {/* Quote */}
-          <blockquote className="mt-8 pl-4 border-l-4 border-gray-300 italic text-gray-700">
-            "Creativity is just connecting things. When you ask creative people
-            how they did something, they feel a little guilty because they
-            didn’t really do it, they just saw something. It seemed obvious to
-            them after a while."
-            <footer className="mt-3 not-italic text-gray-500 font-medium">
-              – Steve Jobs
-            </footer>
-          </blockquote>
-        </div>
-      </section>
+    
 
       <Footer />
     </>
