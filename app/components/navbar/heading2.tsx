@@ -53,7 +53,7 @@ const HeroTitle2 = () => {
         ref={potencyRef}
         className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl italic font-serif text-gray-700 mt-4"
       >
-        Exclusive{" "}
+        
         Collections
       </p>
     </div>
