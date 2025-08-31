@@ -51,9 +51,7 @@ export default function CollectionGrid({ collections }: CollectionGridProps) {
                 <h2 className="text-white text-xl font-bold tracking-wide drop-shadow-lg">
                   {item.title}
                 </h2>
-                <p className="text-gray-200 text-sm md:text-base">
-                  {item.subtitle}
-                </p>
+                
               </div>
             </Link>
           </motion.div>
