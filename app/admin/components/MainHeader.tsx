@@ -46,7 +46,7 @@ const MainHeader = () => {
           </button>
 
           <button
-            onClick={() => router.push("/common/about")}
+            onClick={() => router.push("/comman/about")}
             className="flex items-center gap-2 bg-gray-600/80 text-white font-semibold 
                        py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-9 rounded-md 
                        hover:bg-gray-500 transition text-sm sm:text-base lg:text-lg cursor-pointer"
