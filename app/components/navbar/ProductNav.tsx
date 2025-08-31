@@ -116,6 +116,14 @@ const Productnav = () => {
               >
                 Shop
               </Link>
+              <Link
+                href="/collections/JeaJzkxAmL4SsZ6M073u"
+                onClick={closeMenu}
+                className="cursor-pointer"
+              >
+               New Product
+              </Link>
+              
              
               <Link
                 href="/comman/about"
