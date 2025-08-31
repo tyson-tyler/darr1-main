@@ -49,7 +49,7 @@ const AboutPage = () => {
           {/* Image */}
           <div className="relative w-full h-[350px] md:h-[450px]">
             <Image
-              src="/1 (2).jpeg" // replace with your image
+              src="https://res.cloudinary.com/dblf5n0yn/image/upload/v1756630688/eitokvminai4o2x6mhzs.png" // replace with your image
               alt="About us"
               fill
               className="object-cover rounded-xl shadow-lg"
