@@ -47,20 +47,13 @@ const HeroTitle1 = () => {
   }, []);
 
   return (
-    <div className="text-center flex flex-col justify-center items-center pb-12 pt-10 sm:pt-14 md:pt-16  sm:pb-16  md:pb-20 lg:pb-24 xl:py-28 h-[auto]">
+    <div className="text-center flex flex-col justify-center items-center pb-10 pt-8 sm:pt-10 md:pt-12 sm:pb-12 md:pb-14 lg:pb-16 xl:py-20 h-auto">
       <h1
         ref={exploreRef}
-        className="text-3xl sm:text-4xl md:text-5xl font-semibold lg:text-6xl uppercase tracking-wide text-black"
+        className="text-xl sm:text-2xl md:text-3xl font-semibold lg:text-4xl uppercase tracking-wide text-black"
       >
-        Our Limited Edition
+        Choose By Season
       </h1>
-      <p
-        ref={potencyRef}
-        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl italic font-serif text-gray-700 mt-4"
-      >
-        Zodiac <span className="px-5 py-2 bg-blue-500 text-white">T-Shirt</span>{" "}
-        Collections
-      </p>
     </div>
   );
 };
