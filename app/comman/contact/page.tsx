@@ -64,7 +64,7 @@ Message: ${formData.message}`;
         <div className="absolute inset-0 bg-black/50"></div>
 
         <motion.div
-          className="relative bg-slate-900/90 backdrop-blur-md p-4 sm:p-6 md:p-10 rounded-2xl shadow-2xl max-w-3xl w-full text-white"
+          className="relative  backdrop-blur-md p-4 sm:p-6 md:p-10 rounded-2xl shadow-2xl max-w-3xl w-full text-white"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
