@@ -142,14 +142,27 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
                   className="border border-gray-300 px-4 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black"
                 />
               ))}
-              <textarea
-                placeholder="Notes about your order"
-                value={address.orderNote ?? ""}
-                onChange={(e) =>
-                  handleAddressChange("orderNote", e.target.value)
-                }
-                className="border border-gray-300 px-4 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black"
-              />
+              <h2 className="text-sm font-semibold text-gray-700">
+                Select Size
+              </h2>
+              <div className="flex gap-3">
+                {["M", "L", "XL"].map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => handleAddressChange("orderNote", size)}
+                    className={`px-5 py-2 rounded-xl border text-sm font-medium transition-all
+        ${
+          address.orderNote === size
+            ? "bg-black text-white border-black"
+            : "bg-white text-gray-700 border-gray-300 hover:border-black"
+        }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+
               <button
                 onClick={() => {
                   if (!validateAddress()) {
@@ -241,10 +254,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               Step 3: Payment Mode
             </h2>
             <div className="flex flex-col gap-2">
-              {[
-            
-                { label: "Cash On Delivery", value: "cod" },
-              ].map((mode) => (
+              {[{ label: "Cash On Delivery", value: "cod" }].map((mode) => (
                 <button
                   key={mode.value}
                   onClick={() =>
