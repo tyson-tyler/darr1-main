@@ -34,21 +34,9 @@ const Productnav = () => {
         <div className="flex items-center gap-2">
           <Link href={"/"} className="flex justify-center items-center gap-2">
             <Image src="/lightlogo.png" alt="logo" width={40} height={40} />
-             <span
-            className={
-              "text-xl md:flex items-center gap-1 font-semibold tracking-wide hidden"
-           
-          >
-            The{" "}
-            <p
-              className={classNames(
-                "tracking-tight leading-tight font-serif italic",
-               
-              )}
-            >
-              Drott
-            </p>
-          </span>
+            <span className="text-xl font-semibold italic hidden md:flex">
+              The Drott
+            </span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-6 font-thin text-sm uppercase ml-[80px]">
@@ -56,7 +44,7 @@ const Productnav = () => {
               Home
             </Link>
             <Link
-              href="/collections/bHAeVvxRVIIrznyGZPRp"
+              href="/categories/1aIpbpPn4qWIDAm59MWk"
               className="cursor-pointer"
             >
               Shop
@@ -122,15 +110,19 @@ const Productnav = () => {
                 Home
               </Link>
               <Link
-                href="/collections/bHAeVvxRVIIrznyGZPRp"
+                href="/categories/1aIpbpPn4qWIDAm59MWk"
                 onClick={closeMenu}
                 className="cursor-pointer"
               >
                 Shop
               </Link>
-              
-              
-             
+              <Link
+                href="/comman/blog"
+                onClick={closeMenu}
+                className="cursor-pointer"
+              >
+                Blog
+              </Link>
               <Link
                 href="/comman/about"
                 onClick={closeMenu}
