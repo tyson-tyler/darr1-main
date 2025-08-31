@@ -79,7 +79,8 @@ export default async function Page({ params }: PageProps) {
             <AddReview productId={productId} />
             <Reviews productId={productId} />
             {/* Uncomment when ready */}
-            <RelatedProducts categoryId={product.categoryId ?? ""} />
+<RelatedProducts categoryId="ZOvxnfmjgAorrEEiWpTK" />
+
           </div>
         </AuthContextProvider>
       </div>
