@@ -1,6 +1,6 @@
 import algoliasearch from "algoliasearch";
 import SearchBox from "./components/searchBox";
-import ProductCard from "@/app/components/home/ProductCard"; // ✅ make sure file exists
+import { ProductCard } from "@/app/components/home/Product";// ✅ make sure file exists
 
 // Fetch products from Algolia
 const getProducts = async (text: string) => {
