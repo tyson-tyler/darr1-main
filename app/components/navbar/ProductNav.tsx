@@ -44,7 +44,7 @@ const Productnav = () => {
               Home
             </Link>
             <Link
-              href="/categories/1aIpbpPn4qWIDAm59MWk"
+              href="/collections/JeaJzkxAmL4SsZ6M073u"
               className="cursor-pointer"
             >
               Shop
