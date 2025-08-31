@@ -89,8 +89,8 @@ export default function Photos({ imageList }: { imageList: string[] }) {
         </AnimatePresence>
       </div>
 
-      {/* ✅ Slider for Mobile & Medium Screens */}
-      <div className="relative w-full max-w-3xl sm:block lg:hidden">
+      {/* ✅ Slider for Mobile & Medium Screens - Fullscreen style */}
+      <div className="relative w-full sm:block lg:hidden">
         <Swiper
           pagination={{ clickable: true }}
           modules={[Pagination]}
@@ -98,12 +98,13 @@ export default function Photos({ imageList }: { imageList: string[] }) {
         >
           {imageList.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="relative aspect-square w-full">
+              <div className="relative w-full h-[80vh] sm:h-[85vh]">
                 <Image
                   src={item}
                   alt={`Slider Image ${index + 1}`}
                   fill
                   className="object-cover w-full h-full"
+                  priority={index === 0}
                 />
               </div>
             </SwiperSlide>
