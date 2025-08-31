@@ -13,8 +13,8 @@ import HeaderClientButtons from "../HeaderClientButtons";
 
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
-  { label: "SHOP", href: "/categories/1aIpbpPn4qWIDAm59MWk" },
-  { label: "NEW PRODUCT", href: "/comman/review" },
+  { label: "SHOP", href: "/collections/bHAeVvxRVIIrznyGZPRp" },
+  { label: "NEW PRODUCT", href: "/collections/JeaJzkxAmL4SsZ6M073u" },
 
   { label: "ABOUT", href: "/comman/about" },
   { label: "CONTACT", href: "/comman/contact" },
