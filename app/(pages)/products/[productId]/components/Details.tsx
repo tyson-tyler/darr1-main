@@ -22,7 +22,7 @@ export default function Details({ product }: any) {
   return (
     <div className="w-full flex flex-col gap-6 p-4 md:p-6 lg:p-8 bg-white rounded-lg ">
       {/* Category */}
-      <div className="flex items-center">
+{/*       <div className="flex items-center">
         <Suspense
           fallback={
             <div className="h-8 w-24 bg-gray-100 rounded-full animate-pulse"></div>
@@ -30,7 +30,7 @@ export default function Details({ product }: any) {
         >
           <Category categoryId={product?.catergoryId} />
         </Suspense>
-      </div>
+      </div> */}
 
       {/* Product Title */}
       <h1 className="font-extrabold text-2xl md:text-5xl text-gray-900 leading-tight">
