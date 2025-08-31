@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
 type Review = {
   name: string;
   message: string;
   rating: number;
-  imageLink: string;
 };
 
 export default function CustomerReviews() {
@@ -17,48 +16,36 @@ export default function CustomerReviews() {
       message:
         "Absolutely loved it! The quality exceeded my expectations. Will definitely shop here again.",
       rating: 4.5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-1.jpg?v=1721992196&width=512",
     },
     {
       name: "Oscar Nommanee",
       message:
         "Customer service was top-notch and the delivery was super fast. Highly recommended!",
       rating: 5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-5.jpg?v=1721992196&width=512",
     },
     {
       name: "Emma Watson",
       message:
         "The product was exactly as described. Packaging was neat and safe. Very satisfied.",
       rating: 4.5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-6.jpg?v=1721992197&width=512",
     },
     {
       name: "Liam Carter",
       message:
         "I'm impressed by the attention to detail. This store really values its customers.",
       rating: 5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-2.jpg?v=1721992196&width=512",
     },
     {
       name: "Sophia Patel",
       message:
         "Such a smooth shopping experience. The website was easy to navigate and checkout was quick.",
       rating: 5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-3.jpg?v=1721992196&width=512",
     },
     {
       name: "Noah Kim",
       message:
         "Beautifully crafted and well-made. This was my second order and won’t be my last!",
       rating: 4.5,
-      imageLink:
-        "https://emilly-store1.myshopify.com/cdn/shop/files/bakery-testi-4.jpg?v=1721992196&width=512",
     },
   ];
 
@@ -81,12 +68,10 @@ export default function CustomerReviews() {
               viewport={{ once: true }}
               className="flex flex-col gap-4 items-center text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Avatar */}
-              <img
-                src={item.imageLink}
-                className="h-28 w-28 rounded-full object-cover shadow-lg ring-2 ring-yellow-400/40"
-                alt={item.name}
-              />
+              {/* Initials Badge */}
+              <div className="h-20 w-20 flex items-center justify-center rounded-full bg-yellow-100 text-yellow-600 font-bold text-2xl shadow-md">
+                {item.name.charAt(0)}
+              </div>
 
               {/* Name */}
               <h2 className="text-lg font-semibold text-gray-800">
@@ -119,15 +104,6 @@ export default function CustomerReviews() {
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-6">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 rounded-full bg-yellow-500 text-white font-semibold shadow-md hover:bg-yellow-600 transition-colors"
-          >
-            Read More Reviews
-          </motion.button>
-        </div>
       </div>
     </section>
   );
