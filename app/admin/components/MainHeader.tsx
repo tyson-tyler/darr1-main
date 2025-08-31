@@ -1,13 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Play, Info, Volume2, VolumeX, ShoppingBag } from "lucide-react";
-
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const MainHeader = () => {
   const [muted, setMuted] = useState(true);
-
-  // Prevent rendering before random index is set
+  const router = useRouter();
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -36,11 +34,23 @@ const MainHeader = () => {
           layering with your favorite fashion pieces.
         </p>
 
+        {/* Action Buttons */}
         <div className="mt-5 sm:mt-7 flex flex-wrap gap-3 justify-center lg:justify-start">
-          <button className="flex items-center gap-2 bg-white py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-9 text-black font-semibold rounded-md hover:bg-gray-300 transition text-sm sm:text-base lg:text-lg cursor-pointer">
+          <button
+            onClick={() => router.push("/collections/bHAeVvxRVIIrznyGZPRp")}
+            className="flex items-center gap-2 bg-white py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-9 
+                       text-black font-semibold rounded-md hover:bg-gray-300 transition 
+                       text-sm sm:text-base lg:text-lg cursor-pointer"
+          >
             <ShoppingBag size={18} className="sm:w-5 sm:h-5" /> Buy Now
           </button>
-          <button className="flex items-center gap-2 bg-gray-600/80 text-white font-semibold py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-9 rounded-md hover:bg-gray-500 transition text-sm sm:text-base lg:text-lg cursor-pointer">
+
+          <button
+            onClick={() => router.push("/common/about")}
+            className="flex items-center gap-2 bg-gray-600/80 text-white font-semibold 
+                       py-2 sm:py-3 lg:py-4 px-4 sm:px-6 lg:px-9 rounded-md 
+                       hover:bg-gray-500 transition text-sm sm:text-base lg:text-lg cursor-pointer"
+          >
             <Info size={18} className="sm:w-5 sm:h-5" /> More Info
           </button>
         </div>
