@@ -145,7 +145,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               <h2 className="text-sm font-semibold text-gray-700">
                 Select Size
               </h2>
-              <div className="flex gap-3">
+              <div className="flex justify-center gap-3">
                 {["M", "L", "XL"].map((size) => (
                   <button
                     key={size}
@@ -280,9 +280,9 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               <CheckSquare2Icon size={14} className="text-blue-500" />
               <span>
                 I agree to the{" "}
-                <span className="text-blue-700 underline cursor-pointer">
+                <Link href={"/comman/policy"} className="text-blue-700 underline cursor-pointer">
                   terms & conditions
-                </span>
+                </Link>
               </span>
             </div>
 
