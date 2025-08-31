@@ -110,7 +110,7 @@ export default function Page() {
             </tr>
             <tr>
               <td>Tshirt Size</td>
-              <td>{address?.note}</td>
+              <td>{address?.orderNote}</td>
             </tr>
           </tbody>
         </table>
