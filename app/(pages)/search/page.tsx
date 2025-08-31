@@ -1,13 +1,14 @@
-import { ProductCard } from "@/app/components/home/Product";
 import algoliasearch from "algoliasearch";
 import SearchBox from "./components/searchBox";
+import ProductCard from "@/app/components/home/ProductCard"; // ✅ make sure file exists
 
+// Fetch products from Algolia
 const getProducts = async (text: string) => {
   if (!text) return [];
 
   const client = algoliasearch(
-    process.env.ALGOLIA_APP_ID!,       // ✅ server env vars
-    process.env.ALGOLIA_ADMIN_KEY!     // ✅ use Admin key on server
+    process.env.ALGOLIA_APP_ID!,       // ✅ Server-side env vars
+    process.env.ALGOLIA_ADMIN_KEY!     // ✅ Use Admin key for server
   );
 
   const search = await client.search([
@@ -37,7 +38,7 @@ export default async function Page({ searchParams }: { searchParams: { q?: strin
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
               {products.map((item: any) => (
-                <ProductCard product={item} key={item?.objectID} />
+                <ProductCard product={item} key={item.objectID} />
               ))}
             </div>
           </div>
