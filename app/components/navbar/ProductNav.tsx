@@ -34,8 +34,17 @@ const Productnav = () => {
         <div className="flex items-center gap-2">
           <Link href={"/"} className="flex justify-center items-center gap-2">
             <Image src="/lightlogo.png" alt="logo" width={40} height={40} />
-            The
-              <p
+             <span
+            className={classNames(
+              "text-xl md:flex items-center gap-1 font-semibold tracking-wide hidden",
+              {
+                "text-black": scrolled,
+                "text-white": !scrolled,
+              }
+            )}
+          >
+            The{" "}
+            <p
               className={classNames(
                 "tracking-tight leading-tight font-serif italic",
                 { "text-black": scrolled, "text-white": !scrolled }
@@ -43,6 +52,7 @@ const Productnav = () => {
             >
               Drott
             </p>
+          </span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-6 font-thin text-sm uppercase ml-[80px]">
