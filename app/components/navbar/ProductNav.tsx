@@ -34,7 +34,7 @@ const Productnav = () => {
         <div className="flex items-center gap-2">
           <Link href={"/"} className="flex justify-center items-center gap-2">
             <Image src="/lightlogo.png" alt="logo" width={40} height={40} />
-            <span className="text-xl font-semibold italic hidden md:flex">
+            <span className="text-xl font-semibold  hidden md:flex">
               The Drott
             </span>
           </Link>
