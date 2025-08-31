@@ -56,9 +56,9 @@ export default async function Home() {
           priority
         />
       </main>
-      <div className=" w-full mb-8">
+{/*       <div className=" w-full mb-8">
         <BlogSection />
-      </div>
+      </div> */}
       <div>
         <ContactForm />
       </div>
