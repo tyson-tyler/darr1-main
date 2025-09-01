@@ -53,8 +53,7 @@ const Page = () => {
     try {
       await createNewProduct({
         data: data,
-     featureImage: featureImage || undefined, // optional
-      imageList: imageList.length > 0 ? imageList : undefined, 
+data: data, featureImage: featureImage, imageList: imageList,
       });
       setData(null);
       setFeatureImage(null);
