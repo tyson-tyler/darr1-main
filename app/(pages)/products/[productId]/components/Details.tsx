@@ -3,12 +3,12 @@
 import { useState } from "react";
 import FavoriteButton from "@/app/components/FavoriteButton";
 import { AuthContextProvider } from "@/context/authcontext";
-import { getCatergory } from "@/lib/firebase/catergories/read_server";
 import { getProductReviewCounts } from "@/lib/firebase/products/count/read";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import AddToCartButton from "./AddtoCart";
+import { applyCouponToProduct } from "@/lib/firebase/products/applyCouponToProduct";
 
 export default function Details({ product }: any) {
   if (!product) {
@@ -23,32 +23,27 @@ export default function Details({ product }: any) {
 
   // --- Coupon State ---
   const [coupon, setCoupon] = useState("");
-  const [discount, setDiscount] = useState(0);
   const [error, setError] = useState("");
+  const [appliedPrice, setAppliedPrice] = useState(product?.saleprice);
 
-  // --- Example coupon logic ---
-  const applyCoupon = () => {
+  // --- Apply Coupon ---
+  const handleApplyCoupon = async () => {
     setError("");
 
-    // Dummy coupons (replace with Firebase call if needed)
-    const coupons: Record<string, number> = {
-      SAVE10: 10,
-      SAVE20: 20,
-      FIRST50: 50,
-    };
+    if (!product?.id) {
+      setError("Product not found.");
+      return;
+    }
 
-    const upper = coupon.trim().toUpperCase();
+    const res = await applyCouponToProduct(product.id, coupon);
 
-    if (coupons[upper]) {
-      setDiscount(coupons[upper]);
+    if (res.success && res.newPrice) {
+      setAppliedPrice(res.newPrice);
     } else {
-      setDiscount(0);
-      setError("Invalid coupon code.");
+      setError(res.error || "Failed to apply coupon");
+      setAppliedPrice(product?.saleprice);
     }
   };
-
-  const finalPrice =
-    product?.saleprice - (product?.saleprice * discount) / 100;
 
   return (
     <div className="w-full flex flex-col gap-6 p-4 md:p-6 lg:p-8 bg-white rounded-lg ">
@@ -75,9 +70,9 @@ export default function Details({ product }: any) {
       <div className="flex flex-col gap-2">
         <div className="flex items-baseline gap-3">
           <h3 className="text-green-600 font-bold text-2xl md:text-4xl">
-            ₹ {finalPrice.toLocaleString("en-IN")}
+            ₹ {appliedPrice.toLocaleString("en-IN")}
           </h3>
-          {product?.price && product?.price > product?.saleprice && (
+          {product?.price && product?.price > appliedPrice && (
             <span className="line-through text-gray-500 text-base md:text-xl">
               ₹ {product?.price?.toLocaleString("en-IN")}
             </span>
@@ -85,9 +80,9 @@ export default function Details({ product }: any) {
         </div>
 
         {/* Coupon Applied */}
-        {discount > 0 && (
+        {appliedPrice < product?.saleprice && (
           <p className="text-sm text-green-600 font-semibold">
-            Coupon applied! {discount}% OFF
+            Coupon applied! New price ₹{appliedPrice}
           </p>
         )}
       </div>
@@ -102,7 +97,7 @@ export default function Details({ product }: any) {
           className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
         />
         <button
-          onClick={applyCoupon}
+          onClick={handleApplyCoupon}
           className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-all"
         >
           Apply
@@ -183,4 +178,3 @@ async function RatingReview({ product }: any) {
     </div>
   );
 }
-
