@@ -80,31 +80,11 @@ export default function Details({ product }: any) {
         </div>
 
         {/* Coupon Applied */}
-        {appliedPrice < product?.saleprice && (
-          <p className="text-sm text-green-600 font-semibold">
-            Coupon applied! New price ₹{appliedPrice}
-          </p>
-        )}
+      
       </div>
 
       {/* Coupon Input */}
-      <div className="flex gap-2 items-center mt-2">
-        <input
-          type="text"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-          placeholder="Enter coupon code"
-          className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-        />
-        <button
-          onClick={handleApplyCoupon}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-all"
-        >
-          Apply
-        </button>
-      </div>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-
+    
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 py-2">
         <Link href={`/checkout?type=buynow&productId=${product?.id}`} passHref>
