@@ -80,7 +80,11 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
     : totalPriceBeforeDiscount;
 
   const validateAddress = () => {
-    const requiredFields: (keyof Address)[] = ["fullName", "mobile", "addressLine1"];
+    const requiredFields: (keyof Address)[] = [
+      "fullName",
+      "mobile",
+      "addressLine1",
+    ];
     return requiredFields.every((field) => address[field]?.trim());
   };
 
@@ -104,7 +108,10 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
         setCouponMessage(data.message);
         setCouponDiscount(null);
       } else {
-        setCouponDiscount({ type: data.discountType, value: data.discountValue });
+        setCouponDiscount({
+          type: data.discountType,
+          value: data.discountValue,
+        });
         setCouponMessage(
           `Coupon applied! You got a ${data.discountValue}${
             data.discountType === "percentage" ? "%" : "₹"
@@ -125,7 +132,8 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
     setIsLoading(true);
     try {
       if (totalPrice <= 0) throw new Error("Price should be greater than 0");
-      if (!validateAddress()) throw new Error("Please fill in address details.");
+      if (!validateAddress())
+        throw new Error("Please fill in address details.");
       if (!productList.length) throw new Error("Your cart is empty.");
       if (!user?.uid) throw new Error("User not authenticated.");
 
@@ -158,35 +166,152 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
   return (
     <section className="max-w-2xl mx-auto px-4 py-10">
       <AnimatePresence mode="wait">
+        {/* Step 1: Shipping */}
         {currentStep === 1 && (
-          <motion.div key="step1" className="bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-4"
-            variants={fadeIn} initial="hidden" animate="visible" exit="exit">
-            <h1 className="text-xl font-bold text-gray-800">Step 1: Shipping Address</h1>
-            {/* address inputs here */}
-            <button onClick={() => setCurrentStep(2)}
-              className="bg-black text-white px-4 py-3 rounded-xl text-sm">
+          <motion.div
+            key="step1"
+            className="bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-4"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <h1 className="text-xl font-bold text-gray-800">
+              Step 1: Shipping Address
+            </h1>
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              onChange={(e) =>
+                handleAddressChange("fullName", e.target.value)
+              }
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="Mobile"
+              onChange={(e) => handleAddressChange("mobile", e.target.value)}
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => handleAddressChange("email", e.target.value)}
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="Address Line 1"
+              onChange={(e) =>
+                handleAddressChange("addressLine1", e.target.value)
+              }
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="Address Line 2"
+              onChange={(e) =>
+                handleAddressChange("addressLine2", e.target.value)
+              }
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="Pincode"
+              onChange={(e) => handleAddressChange("pincode", e.target.value)}
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="City"
+              onChange={(e) => handleAddressChange("city", e.target.value)}
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+            <input
+              type="text"
+              placeholder="State"
+              onChange={(e) => handleAddressChange("state", e.target.value)}
+              className="border px-3 py-2 rounded-lg text-sm"
+            />
+
+            <button
+              onClick={() => setCurrentStep(2)}
+              className="bg-black text-white px-4 py-3 rounded-xl text-sm"
+            >
               Continue to Order Summary →
             </button>
           </motion.div>
         )}
 
+        {/* Step 2: Order Summary */}
         {currentStep === 2 && (
-          <motion.div key="step2" className="bg-white p-6 rounded-2xl shadow-xl space-y-4"
-            variants={fadeIn} initial="hidden" animate="visible" exit="exit">
-            <h1 className="text-xl font-bold text-gray-800">Step 2: Your Order</h1>
+          <motion.div
+            key="step2"
+            className="bg-white p-6 rounded-2xl shadow-xl space-y-4"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <h1 className="text-xl font-bold text-gray-800">
+              Step 2: Your Order
+            </h1>
+
+            {/* Product List */}
+            <div className="space-y-3">
+              {productList.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex justify-between items-center border-b pb-2"
+                >
+                  <div className="flex gap-3 items-center">
+                    <Image
+                      src={item.product.featureImageURL}
+                      alt={item.product.title}
+                      width={60}
+                      height={60}
+                      className="rounded-lg"
+                    />
+                    <div>
+                      <h2 className="font-medium text-sm">
+                        {item.product.title}
+                      </h2>
+                      <p className="text-xs text-gray-500">
+                        Qty: {item.quantity}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="font-semibold text-sm">
+                    ₹{(item.quantity * item.product.saleprice).toFixed(2)}
+                  </p>
+                </div>
+              ))}
+            </div>
 
             {/* Coupon Input */}
             <div className="flex gap-2">
-              <input type="text" placeholder="Enter coupon code"
-                value={couponCode} onChange={(e) => setCouponCode(e.target.value)}
-                className="border px-3 py-2 rounded-lg flex-grow text-sm"/>
-              <button onClick={handleApplyCoupon} disabled={isApplyingCoupon}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+              <input
+                type="text"
+                placeholder="Enter coupon code"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                className="border px-3 py-2 rounded-lg flex-grow text-sm"
+              />
+              <button
+                onClick={handleApplyCoupon}
+                disabled={isApplyingCoupon}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm"
+              >
                 {isApplyingCoupon ? "Applying..." : "Apply"}
               </button>
             </div>
             {couponMessage && (
-              <p className={`text-xs ${couponDiscount ? "text-green-600" : "text-red-500"}`}>
+              <p
+                className={`text-xs ${
+                  couponDiscount ? "text-green-600" : "text-red-500"
+                }`}
+              >
                 {couponMessage}
               </p>
             )}
@@ -197,30 +322,63 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             </div>
 
             <div className="flex justify-between">
-              <button onClick={() => setCurrentStep(1)} className="text-sm text-gray-600 underline">
+              <button
+                onClick={() => setCurrentStep(1)}
+                className="text-sm text-gray-600 underline"
+              >
                 ← Back
               </button>
-              <button onClick={() => setCurrentStep(3)} className="bg-black text-white px-4 py-3 rounded-xl text-sm">
+              <button
+                onClick={() => setCurrentStep(3)}
+                className="bg-black text-white px-4 py-3 rounded-xl text-sm"
+              >
                 Continue to Payment →
               </button>
             </div>
           </motion.div>
         )}
 
+        {/* Step 3: Payment Mode */}
         {currentStep === 3 && (
-          <motion.div key="step3" className="bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-4"
-            variants={fadeIn} initial="hidden" animate="visible" exit="exit">
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Step 3: Payment Mode</h2>
-            <button onClick={() => setPaymentMode("cod")}
-              className={`flex items-center gap-2 text-sm ${paymentMode === "cod" ? "text-black font-medium" : "text-gray-600"}`}>
-              {paymentMode === "cod" ? <CheckSquare2Icon size={16} className="text-blue-500"/> : <Square size={16}/>}
+          <motion.div
+            key="step3"
+            className="bg-white p-6 rounded-2xl shadow-xl flex flex-col gap-4"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              Step 3: Payment Mode
+            </h2>
+            <button
+              onClick={() => setPaymentMode("cod")}
+              className={`flex items-center gap-2 text-sm ${
+                paymentMode === "cod"
+                  ? "text-black font-medium"
+                  : "text-gray-600"
+              }`}
+            >
+              {paymentMode === "cod" ? (
+                <CheckSquare2Icon size={16} className="text-blue-500" />
+              ) : (
+                <Square size={16} />
+              )}
               Cash On Delivery
             </button>
 
             <div className="flex justify-between">
-              <button onClick={() => setCurrentStep(2)} className="text-sm text-gray-600 underline">← Back</button>
-              <button onClick={handlePlaceOrder} disabled={isLoading}
-                className="bg-black text-white px-4 py-3 rounded-xl text-sm disabled:opacity-60">
+              <button
+                onClick={() => setCurrentStep(2)}
+                className="text-sm text-gray-600 underline"
+              >
+                ← Back
+              </button>
+              <button
+                onClick={handlePlaceOrder}
+                disabled={isLoading}
+                className="bg-black text-white px-4 py-3 rounded-xl text-sm disabled:opacity-60"
+              >
                 {isLoading ? "Placing Order..." : "Place Order"}
               </button>
             </div>
