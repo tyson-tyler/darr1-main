@@ -94,7 +94,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
     setCouponMessage("");
 
     try {
-      const res = await fetch("/api/apply-coupon", {
+      const res = await fetch("/api/applycop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: couponCode.trim() }),
