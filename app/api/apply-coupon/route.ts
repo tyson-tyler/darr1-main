@@ -4,14 +4,10 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { code } = body;
+    const { code } = await req.json();
 
     if (!code?.trim()) {
-      return NextResponse.json(
-        { message: "Coupon code is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Coupon code is required" }, { status: 400 });
     }
 
     const couponRef = doc(db, "coupons", code.toUpperCase().trim());
@@ -23,14 +19,17 @@ export async function POST(req: Request) {
 
     const couponData = couponSnap.data();
 
-    // Max usage check
+    if (!couponData.discountType || couponData.discountValue === undefined) {
+      return NextResponse.json({ message: "Coupon data is corrupted" }, { status: 400 });
+    }
+
     if (couponData.maxUses && (couponData.usedCount || 0) >= couponData.maxUses) {
       return NextResponse.json({ message: "Coupon usage limit reached" }, { status: 400 });
     }
 
-    // Increment usage
+    // Increment usage safely
     await updateDoc(couponRef, {
-      usedCount: (couponData.usedCount || 0) + 1,
+      usedCount: Number(couponData.usedCount || 0) + 1,
     });
 
     return NextResponse.json({
