@@ -55,14 +55,29 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
   const { user } = useAuth();
   const router = useRouter();
 
+  // Coupon system
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState<{
+    type: "percentage" | "fixed";
+    value: number;
+  } | null>(null);
+  const [couponMessage, setCouponMessage] = useState("");
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+
   const handleAddressChange = (key: keyof Address, value: string) => {
     setAddress((prev) => ({ ...prev, [key]: value }));
   };
 
-  const totalPrice = productList.reduce(
+  const totalPriceBeforeDiscount = productList.reduce(
     (acc, curr) => acc + curr.quantity * curr.product.saleprice,
     0
   );
+
+  const totalPrice = couponDiscount
+    ? couponDiscount.type === "percentage"
+      ? totalPriceBeforeDiscount * (1 - couponDiscount.value / 100)
+      : Math.max(0, totalPriceBeforeDiscount - couponDiscount.value)
+    : totalPriceBeforeDiscount;
 
   const validateAddress = () => {
     const requiredFields: (keyof Address)[] = [
@@ -71,6 +86,37 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
       "addressLine1",
     ];
     return requiredFields.every((field) => address[field]?.trim());
+  };
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return setCouponMessage("Enter a coupon code");
+    setIsApplyingCoupon(true);
+    setCouponMessage("");
+
+    try {
+      const res = await fetch("/api/apply-coupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: couponCode.trim() }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setCouponMessage(data.message);
+        setCouponDiscount(null);
+      } else {
+        setCouponDiscount({ type: data.discountType, value: data.discountValue });
+        setCouponMessage(
+          `Coupon applied! You got a ${data.discountValue}${
+            data.discountType === "percentage" ? "%" : "₹"
+          } discount`
+        );
+      }
+    } catch (err) {
+      setCouponMessage("Failed to apply coupon. Try again.");
+    } finally {
+      setIsApplyingCoupon(false);
+    }
   };
 
   const handlePlaceOrder = async () => {
@@ -82,19 +128,18 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
       if (!productList.length) throw new Error("Your cart is empty.");
       if (!user?.uid) throw new Error("User not authenticated.");
 
+      const orderData = {
+        uid: user.uid,
+        products: productList,
+        address,
+        coupon: couponDiscount ? { code: couponCode, ...couponDiscount } : null,
+      };
+
       if (paymentMode === "prepaid") {
-        const url = await createCheckoutAndGetURL({
-          uid: user.uid,
-          products: productList,
-          address,
-        });
+        const url = await createCheckoutAndGetURL(orderData);
         router.push(url);
       } else {
-        const checkoutId = await createCheckoutCODAndGetId({
-          uid: user.uid,
-          products: productList,
-          address,
-        });
+        const checkoutId = await createCheckoutCODAndGetId(orderData);
         toast.success("Order placed successfully!");
         confetti();
         router.push(`/checkout-cod?checkout_id=${checkoutId}`);
@@ -143,21 +188,18 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
                   className="border border-gray-300 px-4 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black"
                 />
               ))}
-              <h2 className="text-sm font-semibold text-gray-700">
-                Select Size
-              </h2>
+              <h2 className="text-sm font-semibold text-gray-700">Select Size</h2>
               <div className="flex justify-center gap-3">
                 {["M", "L", "XL"].map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => handleAddressChange("orderNote", size)}
-                    className={`px-5 py-2 rounded-xl border text-sm font-medium transition-all
-        ${
-          address.orderNote === size
-            ? "bg-black text-white border-black"
-            : "bg-white text-gray-700 border-gray-300 hover:border-black"
-        }`}
+                    className={`px-5 py-2 rounded-xl border text-sm font-medium transition-all ${
+                      address.orderNote === size
+                        ? "bg-black text-white border-black"
+                        : "bg-white text-gray-700 border-gray-300 hover:border-black"
+                    }`}
                   >
                     {size}
                   </button>
@@ -192,6 +234,36 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             <h1 className="text-xl font-bold text-gray-800">
               Step 2: Your Order
             </h1>
+
+            {/* Coupon Input */}
+            <div className="flex flex-col gap-2 mb-2">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Enter coupon code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="border px-3 py-2 rounded-lg flex-grow text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  disabled={isApplyingCoupon}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {isApplyingCoupon ? "Applying..." : "Apply"}
+                </button>
+              </div>
+              {couponMessage && (
+                <p
+                  className={`text-xs ${
+                    couponDiscount ? "text-green-600" : "text-red-500"
+                  }`}
+                >
+                  {couponMessage}
+                </p>
+              )}
+            </div>
+
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
               {productList.map((item) => (
                 <div
@@ -221,10 +293,12 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
                 </div>
               ))}
             </div>
+
             <div className="flex justify-between font-semibold text-lg border-t pt-2">
               <h2>Total</h2>
-              <h2>₹{totalPrice}</h2>
+              <h2>₹{totalPrice.toFixed(2)}</h2>
             </div>
+
             <div className="flex justify-between">
               <button
                 onClick={() => setCurrentStep(1)}
@@ -281,7 +355,10 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               <CheckSquare2Icon size={14} className="text-blue-500" />
               <span>
                 I agree to the{" "}
-                <Link href={"/comman/policy"} className="text-blue-700 underline cursor-pointer">
+                <Link
+                  href={"/comman/policy"}
+                  className="text-blue-700 underline cursor-pointer"
+                >
                   terms & conditions
                 </Link>
               </span>
