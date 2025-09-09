@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 
 type Address = {
   fullName?: string;
@@ -120,6 +119,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
       }
     } catch (err) {
       setCouponMessage("Failed to apply coupon. Try again.");
+      setCouponDiscount(null);
     } finally {
       setIsApplyingCoupon(false);
     }
@@ -132,8 +132,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
     setIsLoading(true);
     try {
       if (totalPrice <= 0) throw new Error("Price should be greater than 0");
-      if (!validateAddress())
-        throw new Error("Please fill in address details.");
+      if (!validateAddress()) throw new Error("Please fill in address details.");
       if (!productList.length) throw new Error("Your cart is empty.");
       if (!user?.uid) throw new Error("User not authenticated.");
 
@@ -179,62 +178,15 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             <h1 className="text-xl font-bold text-gray-800">
               Step 1: Shipping Address
             </h1>
-
-            <input
-              type="text"
-              placeholder="Full Name"
-              onChange={(e) =>
-                handleAddressChange("fullName", e.target.value)
-              }
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="Mobile"
-              onChange={(e) => handleAddressChange("mobile", e.target.value)}
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="Email"
-              onChange={(e) => handleAddressChange("email", e.target.value)}
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="Address Line 1"
-              onChange={(e) =>
-                handleAddressChange("addressLine1", e.target.value)
-              }
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="Address Line 2"
-              onChange={(e) =>
-                handleAddressChange("addressLine2", e.target.value)
-              }
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="Pincode"
-              onChange={(e) => handleAddressChange("pincode", e.target.value)}
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="City"
-              onChange={(e) => handleAddressChange("city", e.target.value)}
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              placeholder="State"
-              onChange={(e) => handleAddressChange("state", e.target.value)}
-              className="border px-3 py-2 rounded-lg text-sm"
-            />
-
+            {["fullName", "mobile", "email", "addressLine1", "addressLine2", "pincode", "city", "state"].map((field) => (
+              <input
+                key={field}
+                type="text"
+                placeholder={field.replace(/([A-Z])/g, ' $1')}
+                onChange={(e) => handleAddressChange(field as keyof Address, e.target.value)}
+                className="border px-3 py-2 rounded-lg text-sm"
+              />
+            ))}
             <button
               onClick={() => setCurrentStep(2)}
               className="bg-black text-white px-4 py-3 rounded-xl text-sm"
@@ -254,11 +206,8 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             animate="visible"
             exit="exit"
           >
-            <h1 className="text-xl font-bold text-gray-800">
-              Step 2: Your Order
-            </h1>
+            <h1 className="text-xl font-bold text-gray-800">Step 2: Your Order</h1>
 
-            {/* Product List */}
             <div className="space-y-3">
               {productList.map((item) => (
                 <div
@@ -274,12 +223,8 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
                       className="rounded-lg"
                     />
                     <div>
-                      <h2 className="font-medium text-sm">
-                        {item.product.title}
-                      </h2>
-                      <p className="text-xs text-gray-500">
-                        Qty: {item.quantity}
-                      </p>
+                      <h2 className="font-medium text-sm">{item.product.title}</h2>
+                      <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                     </div>
                   </div>
                   <p className="font-semibold text-sm">
@@ -290,7 +235,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             </div>
 
             {/* Coupon Input */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-2">
               <input
                 type="text"
                 placeholder="Enter coupon code"
@@ -316,12 +261,12 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               </p>
             )}
 
-            <div className="flex justify-between font-semibold text-lg border-t pt-2">
+            <div className="flex justify-between font-semibold text-lg border-t pt-2 mt-2">
               <h2>Total</h2>
               <h2>₹{totalPrice.toFixed(2)}</h2>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-2">
               <button
                 onClick={() => setCurrentStep(1)}
                 className="text-sm text-gray-600 underline"
@@ -354,9 +299,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
             <button
               onClick={() => setPaymentMode("cod")}
               className={`flex items-center gap-2 text-sm ${
-                paymentMode === "cod"
-                  ? "text-black font-medium"
-                  : "text-gray-600"
+                paymentMode === "cod" ? "text-black font-medium" : "text-gray-600"
               }`}
             >
               {paymentMode === "cod" ? (
@@ -367,7 +310,7 @@ const Checkout: React.FC<CheckoutProps> = ({ productList }) => {
               Cash On Delivery
             </button>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-2">
               <button
                 onClick={() => setCurrentStep(2)}
                 className="text-sm text-gray-600 underline"
