@@ -21,20 +21,6 @@ export async function POST(req: Request) {
     const couponData = couponSnap.data();
 
     // ----------------------------
-    // Expiry check
-    // ----------------------------
-    if (couponData.expiresAt) {
-      let expiresAtMillis =
-        typeof couponData.expiresAt.toMillis === "function"
-          ? couponData.expiresAt.toMillis()
-          : new Date(couponData.expiresAt).getTime();
-
-      if (expiresAtMillis < Date.now()) {
-        return NextResponse.json({ message: "Coupon has expired" }, { status: 400 });
-      }
-    }
-
-    // ----------------------------
     // Max usage check
     // ----------------------------
     if (couponData.maxUses && (couponData.usedCount || 0) >= couponData.maxUses) {
