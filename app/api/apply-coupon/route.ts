@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/firebase"; // make sure you export Firestore from here
+import { db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export async function POST(req: Request) {
@@ -7,8 +7,11 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { code } = body;
 
-    if (!code) {
-      return NextResponse.json({ message: "Coupon code is required" }, { status: 400 });
+    if (!code?.trim()) {
+      return NextResponse.json(
+        { message: "Coupon code is required" },
+        { status: 400 }
+      );
     }
 
     const couponRef = doc(db, "coupons", code.toUpperCase().trim());
@@ -20,25 +23,18 @@ export async function POST(req: Request) {
 
     const couponData = couponSnap.data();
 
-    // ----------------------------
     // Max usage check
-    // ----------------------------
     if (couponData.maxUses && (couponData.usedCount || 0) >= couponData.maxUses) {
       return NextResponse.json({ message: "Coupon usage limit reached" }, { status: 400 });
     }
 
-    // ----------------------------
     // Increment usage
-    // ----------------------------
     await updateDoc(couponRef, {
       usedCount: (couponData.usedCount || 0) + 1,
     });
 
-    // ----------------------------
-    // Return discount
-    // ----------------------------
     return NextResponse.json({
-      discountType: couponData.discountType, // "percentage" | "fixed"
+      discountType: couponData.discountType,
       discountValue: couponData.discountValue,
     });
   } catch (err) {
